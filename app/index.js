@@ -26,8 +26,10 @@ import {vibration} from 'haptics';
 
 const timer = document.getElementById('timer');
 const playBtn = document.getElementById('play-btn'); 
-let playIcon = document.getElementById("combo-button-icon");
-let playIconPress = document.getElementById("combo-button-icon-press");
+let playIcon = document.getElementById('combo-button-icon');
+let playIconPress = document.getElementById('combo-button-icon-press');
+const restartBtn = document.getElementById('restart-btn');
+restartBtn.style.display = 'none';
 
 // TODO get setting defaults
 let [m, s] = [10, 0];
@@ -47,14 +49,24 @@ playBtn.onclick = () => {
         playIcon.image = 'icons\\btn_combo_play_p.png';
         playIconPress.image = 'icons\\btn_combo_play_press_p.png';
         isCounting = false;
+        toggle(restartBtn);
     }
     else{
+        if (timerStart) toggle(restartBtn);
         console.log('play');
         timerStart = Date.now();
         playIcon.image = 'icons\\btn_combo_pause_p.png';
         playIconPress.image = 'icons\\btn_combo_pause_press_p.png';
         isCounting = true;
+
     }
+}
+
+restartBtn.onclick = () => {
+    toggle(restartBtn);
+    timerStart = 0
+    timerLength = (m*60 + s) * 1000;
+    timer.text = msToString((m*60 + s) * 1000);
 }
 
 clock.granularity = 'seconds';
@@ -76,7 +88,10 @@ function msToMinSec(ms){
 
 function msToString(ms){
     let [m, s] = msToMinSec(ms);
-    //if (m < 10) m = '0'+m;
     if (s < 10) s = '0'+s;
     return m + ':' + s;
+}
+
+function toggle(element) {
+    element.style.display = (element.style.display === "inline") ? "none" : "inline";
 }
