@@ -1,11 +1,6 @@
-<svg viewport-fill='black'>
-  <text id='timer'/>
-  <use id='play-btn' href='#combo-button-lower-right' fill='white'>
-    <set href='combo-button-icon' attributeName='href' to='icons/btn_combo_play_p.png'/>
-    <set href='combo-button-icon-press' attributeName='href' to='icons/btn_combo_play_press_p.png'/>
-  </use>
-  <use id='restart-btn' href='#combo-button-upper-right' fill='white'>
-    <set href='combo-button-icon' attributeName='href' to='icons/btn_combo_reset_p.png'/>
-    <set href='combo-button-icon-press' attributeName='href' to='icons/btn_combo_reset_p.png'/>
-  </use>
+<svg viewport-fill="black">
+  <text x="50%" y="50%+15"
+        font-family="System-Regular" fill="white"
+        font-size="30" font-weight="bold"
+        text-anchor="middle">Loading</text>
 </svg>

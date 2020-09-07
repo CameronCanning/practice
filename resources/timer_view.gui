@@ -1,0 +1,19 @@
+<svg viewport-fill='black'>
+  <svg id='timer-view'>
+    <text id='timer'/>
+    <use id='play-btn' href='#combo-button-lower-right' fill='white'>
+      <set href='combo-button-icon' attributeName='href' to='icons/btn_combo_play_p.png'/>
+      <set href='combo-button-icon-press' attributeName='href' to='icons/btn_combo_play_press_p.png'/>
+    </use>
+    <use id='restart-btn' href='#combo-button-upper-right' fill='white'>
+      <set href='combo-button-icon' attributeName='href' to='icons/btn_combo_reset_p.png'/>
+      <set href='combo-button-icon-press' attributeName='href' to='icons/btn_combo_reset_p.png'/>
+    </use>
+  </svg>
+  <svg id='finished-view' display='none'>
+    <use id='restart-btn' href='#combo-button-upper-right' fill='white'>
+      <set href='combo-button-icon' attributeName='href' to='icons/btn_combo_reset_p.png'/>
+      <set href='combo-button-icon-press' attributeName='href' to='icons/btn_combo_reset_p.png'/>
+    </use>
+  </svg>
+</svg>

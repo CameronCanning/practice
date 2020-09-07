@@ -26,5 +26,8 @@
   "scripts": {
     "build": "fitbit-build",
     "debug": "fitbit"
+  },
+  "dependencies": {
+    "fitbit-views": "^1.0.3"
   }
 }
