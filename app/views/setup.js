@@ -12,17 +12,17 @@ export default (timerSettings) => {
     let playButton = document.getElementById('play-button');   
 
     playButton.onclick = () => {
-        next('timer_view', timerSettings);
+        next('timer', timerSettings);
     }
     durationButton.onclick = () => {
-        next('setup_duration_view', timerSettings);
+        next('setup_duration', timerSettings);
         
     }
     intervalButton.onclick = () => {
         console.log('int');
     }
     activityButton.onclick = () => {
-        next('setup_activity_view', timerSettings);
+        next('setup_activity', timerSettings);
     }
 
     let setSetupValues = ({ duration, intervals, activity }) => {
