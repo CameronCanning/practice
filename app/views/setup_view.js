@@ -3,21 +3,19 @@ import document from 'document';
 import { me as device } from 'device';
 
 export default (timerSettings) => {
-    let setupView = document.getElementById('setup-view-default');
     let durationButton = document.getElementById('duration-button');
     let durationValue = document.getElementById('duration-value');
     let intervalButton = document.getElementById('interval-button');
     let intervalValue = document.getElementById('interval-value');
     let activityButton = document.getElementById('activity-button');
     let activityValue = document.getElementById('activity-value');
-    let activityPopup = document.getElementById('activity-popup');
     let playButton = document.getElementById('play-button');   
 
     playButton.onclick = () => {
-        next('timer_view', { timerSettings });
+        next('timer_view', timerSettings);
     }
     durationButton.onclick = () => {
-        console.log('Duration popup');
+        next('setup_duration_view', timerSettings);
         
     }
     intervalButton.onclick = () => {
@@ -25,20 +23,14 @@ export default (timerSettings) => {
     }
     activityButton.onclick = () => {
         next('setup_activity_view', timerSettings);
-        console.log('Activity popup');
-    }
-    document.onkeypress = (evt) => {
-        if (evt.key === 'back' && setupView.style.display === 'none'){
-            showDefault();
-            evt.preventDefault();
-        }
     }
 
     let setSetupValues = ({ duration, intervals, activity }) => {
-        durationValue.text = duration;
+        (duration > 0) ? durationValue.text = `${duration} m` : durationValue.text = 'infinity';
         intervalValue.text = intervals;
         activityValue.text = activity;
     }
+
     centerPlayButton();
     setSetupValues(timerSettings);
 

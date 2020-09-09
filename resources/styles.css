@@ -4,6 +4,7 @@ text {
   font-family: System-Regular;
   font-weight: regular;
   text-length: 32;
+  fill: white;
 }
 
 .title{
@@ -71,4 +72,24 @@ text {
   width: 100%;
   height: 1;
   fill: grey;
+}
+
+.tumbler { 
+  y: 50%-60; 
+}
+
+.item { 
+  height: 90; 
+}
+
+.item text { 
+  font-size: 80; 
+  text-anchor: middle;
+  fill: white; 
+  x: 50%;  
+}
+
+.tumbler-container {
+  width: 25%;
+  x: $;
 }
