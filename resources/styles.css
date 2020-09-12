@@ -41,7 +41,7 @@ text {
 }
 .horizontal-line {
   fill: grey; 
-  stroke-width: 1;
+  stroke-width: 2;
   x1: 0%;
   x2: 100%;
   y1: 0;
@@ -50,11 +50,11 @@ text {
 
 #timer {
   x: 50%;
+  y: 100%;
   text-anchor: middle;
   fill: white;
   font-size: 64;
   text-length: 5;
-  pointer-events: visible;
 }
 
 .tile-list-item {

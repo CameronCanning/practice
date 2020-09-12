@@ -4,7 +4,7 @@
     <section class='label-container'>
       <line class='horizontal-line'/>  
       <text class='label'>Duration</text>
-      <text class='value' id='duration-value'>10m</text>
+      <text class='value' id='duration-value'>10 m</text>
       <rect id='duration-button' class='label-button'/>
     </section>
     <section class='label-container'>
@@ -23,7 +23,7 @@
   </section>
   <section id='play-button-section' y='70%' height='25%'>
     <circle cx='50%' cy='50%' r='50%' fill='grey'/>
-    <circle cx='50%' cy='50%' r='50%-1' fill='black'/>
+    <circle cx='50%' cy='50%' r='50%-3' fill='black'/>
     <image id='play-image' x ='50%' href="icons/btn_combo_play_press_p.png" fill='white'/>
     <circle id='play-button' cx='50%' cy='50%' r='50%' fill='none' pointer-events='visible'/>
   </section>

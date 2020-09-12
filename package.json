@@ -28,6 +28,7 @@
     "debug": "fitbit"
   },
   "dependencies": {
+    "fitbit": "0.0.7",
     "fitbit-views": "^1.0.3"
   }
 }
