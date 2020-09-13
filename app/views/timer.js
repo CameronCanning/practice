@@ -1,9 +1,7 @@
 import document from 'document';
 import clock from 'clock';
-import {vibration} from 'haptics';
-import { Timer } from '../Timer';
+import { vibration } from 'haptics';
 import { centerPlayButton } from '../helper';
-import {me} from "appbit";
 import { back, next } from 'fitbit-views';
 
 //TODO-fix: don't track time if passed
@@ -18,11 +16,12 @@ export default (timerSettings) => {
 
     centerPlayButton(playSection, playImage);
 
-    let duration = timerSettings.duration * 60 * 1000;
+    let duration = (timerSettings.duration == 0) ? 0 : timerSettings.duration * 60 * 1000;
     let intervals = timerSettings.intervals;
     let isCounting = false;
     let timerStart = 0;
-        
+    let previousElasped = 0;
+
     let play = () => {
         timerStart = Date.now();
         isCounting = true;
@@ -32,24 +31,12 @@ export default (timerSettings) => {
     }
 
     let pause = () => {
-        duration = duration - (Date.now() - timerStart);
+        previousElasped += currentElasped();
         isCounting = false;
         playImage.image = 'icons\\btn_combo_play_press_p.png';
-        pauseSection.style.display = 'inline';
         clock.granularity = 'off';
+        pauseSection.style.display = 'inline';
     }
-
-    let elaspedTime = () => {
-        return timerStart ? Date.now() - timerStart : 0;
-    }
-    let done = () => {
-        if (duration <= elaspedTime()){
-            isCounting = false;
-            return true;
-        }
-        return false;
-    }
-
     let msToMinSec = (ms) => {
         let s = Math.floor(ms/1000);
         let m = Math.floor(s/60);
@@ -57,16 +44,29 @@ export default (timerSettings) => {
         return [m, s];
     }
 
-    let toString = () => {
-        let [m, s] = msToMinSec(duration - elaspedTime());
+    let toString = ([m, s]) => {
         if (s < 10) s = `0${s}`;
         console.log(`${m}:${s}`);
         return `${m}:${s}`;
     }
-    let start = () => {
-        timerLabel.text = toString();
-        play();
+    let currentElasped = () => {
+        return Date.now() - timerStart;
     }
+    let totalElasped = () => {
+        return previousElasped + currentElasped();
+    }
+    let done = () => {
+        if (duration){
+            return (duration <= totalElasped()) ? true : false;
+        }
+        return false;
+    }
+
+    let updateTimer = () => {
+        let timerValue = (duration) ? duration - totalElasped() : totalElasped();
+        let [m, s] = msToMinSec(timerValue);
+        timerLabel.text = toString([m, s]);
+    } 
     playButton.onclick = () => {
         isCounting ? pause() : play();
     }
@@ -76,18 +76,20 @@ export default (timerSettings) => {
     }
 
     finishButton.onclick = () => {
-        next('timer_finish');
+        vibration.start('nudge-max');
+        next('timer_finish', {timerSettings, totalElasped()});
     }
 
-    clock.ontick = () => {
-        if (isCounting){
-            if (done()){
-                next('timer_finish');
-            }
-            else{
-                timerLabel.text = toString();
-            }
+    clock.ontick = (evt) => {
+        updateTimer();
+        if (done()){
+            vibration.start('nudge-max');
+            clock.granularity = 'off';
+            next('timer_finish', {timerSettings, totalElasped()});
         }
     }
-    start()
+    play();
+    updateTimer();
+    
 }
+

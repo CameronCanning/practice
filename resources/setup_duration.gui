@@ -1,4 +1,4 @@
-<svg>
+<svg viewport-fill='black'>
     <svg class='tumbler-container'>
         <use id="tumbler-100" class='tumbler' href="#tumblerview">
             <use id="item0" href="#tumbler-item" class="item">

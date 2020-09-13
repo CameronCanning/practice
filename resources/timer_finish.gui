@@ -1,3 +1,6 @@
-<svg>
-    <text>1234</text>
+<svg viewport-fill='black'>
+    <text id='streak' text-anchor='middle' x='50%' y='50%' font-size='48'>1 day streak!</text>
+    <use id="finish-button" href="#square-button" fill="white" y='75%'>
+      <set href="#text" attributeName="text-buffer" to="Finish" />
+    </use>
 </svg>

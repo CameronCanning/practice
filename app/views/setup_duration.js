@@ -37,7 +37,7 @@ export default (timerSettings) => {
     submitButton.onclick = submitTumblerValues;
 
     infinityButton.onclick = () => {
-        timerSettings.duration = -1;
+        timerSettings.duration = 0;
         back(timerSettings);
     }
 }

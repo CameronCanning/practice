@@ -1,6 +1,7 @@
-import { next } from 'fitbit-views';
+import { next, buttons } from 'fitbit-views';
 import document from 'document';
 import { centerPlayButton } from '../helper';
+import { me } from 'appbit';
 
 export default (timerSettings) => {
     let durationButton = document.getElementById('duration-button');
@@ -25,9 +26,13 @@ export default (timerSettings) => {
         next('setup_activity', timerSettings);
     }
 
+    buttons.back = () => {
+        me.exit();
+    }
+    
     let setSetupValues = ({ duration, intervals, activity }) => {
         (duration > 0) ? durationValue.text = `${duration} m` : durationValue.text = 'Infinity';
-        intervalValue.text = intervals;
+        intervalValue.text = intervals.length;
         activityValue.text = activity;
     }
 

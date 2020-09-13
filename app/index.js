@@ -18,8 +18,8 @@ setup({
 
 //good place to grab defaults from settings and send as param to next
 let timerSettings = {
-    duration: 1,
-    intervals: 0,
+    duration: 10,
+    intervals: [],
     activity: 'Meditation',
 } 
 next('setup', timerSettings);
