@@ -16,9 +16,11 @@ export default (timerSettings) => {
 
     centerPlayButton(playSection, playImage);
 
-    let duration = (timerSettings.duration == 0) ? 0 : timerSettings.duration * 60 * 1000;
+    //let duration = (timerSettings.duration == 0) ? 0 : timerSettings.duration * 60 * 1000;
+    let duration = (timerSettings.duration == 0) ? 0 :   3000;
     let intervals = timerSettings.intervals;
-    let sessionFinished = false;
+    let toCountup = null;
+    let durationFinished = false;
 
     let play = () => {
         exercise.resume();
@@ -47,18 +49,23 @@ export default (timerSettings) => {
     }
 
     let timerFinished = () => {
-        if (sessionFinished){
+        if (durationFinished){
             return false;
         }
         else if (duration){
-            sessionFinished = true;
-            return (duration <= exercise.stats.activeTime) ? true : false;
+            if (duration <= exercise.stats.activeTime) {
+                durationFinished = true;
+                return true;
+            }
+            return false;
+            //return (duration <= exercise.stats.activeTime) ? true : false;
         }
         return false;
     }
 
     let updateTimer = () => {
         let timerValue = (duration) ? duration - exercise.stats.activeTime : exercise.stats.activeTime;
+        if (timerValue < 0) timerValue = 0;
         let [m, s] = msToMinSec(timerValue);
         timerLabel.text = toString([m, s]);
     } 
@@ -69,7 +76,7 @@ export default (timerSettings) => {
 
     finishButton.onclick = () => {
         clock.granularity = 'off';
-        //exercise.pause();
+        clearTimeout(toCountup);
         next('timer_finish', timerSettings);
     }
 
@@ -78,19 +85,17 @@ export default (timerSettings) => {
         exercise.stop();
         next('setup', timerSettings);
     }
-
+    
     clock.ontick = () => {
-        if (!sessionFinished){
-            updateTimer();
-            if (timerFinished()){
-                vibration.start('nudge-max');
-                
-            }
-        }
-        else{
-            //show additonal time +1:02....+1:03
-            pauseSection.style.display = 'inline';
-            playSection.style.display = 'none';
+        updateTimer();
+        if (timerFinished()){
+            console.log('nudge-max');
+            vibration.start('nudge-max');
+            //after 10 seconds start counting up
+            toCountup  = setTimeout(() => {
+                duration = 0;
+                durationFinished = false;
+            }, 10000);
         }
     }
 

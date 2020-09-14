@@ -1,7 +1,6 @@
 import document from 'document';
-import clock from 'clock';
 import exercise from 'exercise';
-import { back, next, buttons } from 'fitbit-views';
+import { next, buttons } from 'fitbit-views';
 
 export default (param) => {
     let logButton = document.getElementById('log-button');
