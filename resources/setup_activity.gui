@@ -11,16 +11,16 @@
     <use id="my-list" href="#tile-list">
         <var id="separator-height-bottom" value="1" />
         <use href="#my-tile-item" class="tile-list-item">
-        <set href="text" attributeName="text-buffer" to=" Meditation" />
+        <set href="text" attributeName="text-buffer" to="Meditation" />
         </use>
         <use href="#my-tile-item" class="tile-list-item">
-        <set href="text" attributeName="text-buffer" to=" Yoga" />
+        <set href="text" attributeName="text-buffer" to="Yoga" />
         </use>
         <use href="#my-tile-item" class="tile-list-item">
-        <set href="text" attributeName="text-buffer" to=" Tai Chi" />
+        <set href="text" attributeName="text-buffer" to="Tai Chi" />
         </use>
         <use href="#my-tile-item" class="tile-list-item">
-        <set href="text" attributeName="text-buffer" to=" Breathing" />
+        <set href="text" attributeName="text-buffer" to="Breathing" />
         </use>
     </use>
 </svg>

@@ -1,8 +1,9 @@
 import document from 'document';
 import clock from 'clock';
+import exercise from 'exercise';
 import { vibration } from 'haptics';
 import { centerPlayButton } from '../helper';
-import { back, next } from 'fitbit-views';
+import { buttons, back, next } from 'fitbit-views';
 
 //TODO-fix: don't track time if passed
 export default (timerSettings) => {
@@ -11,28 +12,23 @@ export default (timerSettings) => {
     let playImage = document.getElementById('play-image');
     let playSection = document.getElementById('play-button-section');
     let pauseSection = document.getElementById('pause-section');
-    let discardButton = document.getElementById('discard-button');
     let finishButton = document.getElementById('finish-button');
 
     centerPlayButton(playSection, playImage);
 
     let duration = (timerSettings.duration == 0) ? 0 : timerSettings.duration * 60 * 1000;
     let intervals = timerSettings.intervals;
-    let isCounting = false;
-    let timerStart = 0;
-    let previousElasped = 0;
+    let sessionFinished = false;
 
     let play = () => {
-        timerStart = Date.now();
-        isCounting = true;
+        exercise.resume();
         playImage.image = 'icons\\btn_combo_pause_press_p.png';
         clock.granularity = 'seconds';
         pauseSection.style.display = 'none';
     }
 
     let pause = () => {
-        previousElasped += currentElasped();
-        isCounting = false;
+        exercise.pause();
         playImage.image = 'icons\\btn_combo_play_press_p.png';
         clock.granularity = 'off';
         pauseSection.style.display = 'inline';
@@ -49,47 +45,56 @@ export default (timerSettings) => {
         console.log(`${m}:${s}`);
         return `${m}:${s}`;
     }
-    let currentElasped = () => {
-        return Date.now() - timerStart;
-    }
-    let totalElasped = () => {
-        return previousElasped + currentElasped();
-    }
-    let done = () => {
-        if (duration){
-            return (duration <= totalElasped()) ? true : false;
+
+    let timerFinished = () => {
+        if (sessionFinished){
+            return false;
+        }
+        else if (duration){
+            sessionFinished = true;
+            return (duration <= exercise.stats.activeTime) ? true : false;
         }
         return false;
     }
 
     let updateTimer = () => {
-        let timerValue = (duration) ? duration - totalElasped() : totalElasped();
+        let timerValue = (duration) ? duration - exercise.stats.activeTime : exercise.stats.activeTime;
         let [m, s] = msToMinSec(timerValue);
         timerLabel.text = toString([m, s]);
     } 
-    playButton.onclick = () => {
-        isCounting ? pause() : play();
-    }
 
-    discardButton.onclick = () => {
-        back(timerSettings);
+    playButton.onclick = () => {
+        (exercise.state === 'started') ? pause() : play();
     }
 
     finishButton.onclick = () => {
-        vibration.start('nudge-max');
-        next('timer_finish', {timerSettings, totalElasped()});
+        clock.granularity = 'off';
+        //exercise.pause();
+        next('timer_finish', timerSettings);
     }
 
-    clock.ontick = (evt) => {
-        updateTimer();
-        if (done()){
-            vibration.start('nudge-max');
-            clock.granularity = 'off';
-            next('timer_finish', {timerSettings, totalElasped()});
+    buttons.back = () => {
+        clock.granularity = 'off';
+        exercise.stop();
+        next('setup', timerSettings);
+    }
+
+    clock.ontick = () => {
+        if (!sessionFinished){
+            updateTimer();
+            if (timerFinished()){
+                vibration.start('nudge-max');
+                
+            }
+        }
+        else{
+            //show additonal time +1:02....+1:03
+            pauseSection.style.display = 'inline';
+            playSection.style.display = 'none';
         }
     }
-    play();
-    updateTimer();
-    
-}
 
+    exercise.start(timerSettings.activity);
+    updateTimer();
+    clock.granularity = 'seconds';
+}

@@ -6,7 +6,6 @@ import setup_duration from './views/setup_duration';
 import timer from './views/timer';
 import timer_finish from './views/timer_finish';
 
-
 setup({
     'setup' : setup_view,
     'setup_activity' : setup_activity,
@@ -20,7 +19,7 @@ setup({
 let timerSettings = {
     duration: 10,
     intervals: [],
-    activity: 'Meditation',
+    activity: 'meditation',
 } 
 next('setup', timerSettings);
 

@@ -3,10 +3,7 @@
     <text id='timer'/>
   </section>
   <svg id='pause-section' display='none' y='50%' height='25%'>
-    <use id="discard-button" href="#square-button" y="5" fill="grey" width='50%' x='0' height='75%'>
-      <set href="#text" attributeName="text-buffer" to="Discard" />
-    </use>
-    <use id="finish-button" href="#square-button" y="5" fill="white" width='50%' x='$' height='75%'>
+    <use id="finish-button" href="#square-button" y="5" fill="white" width='100%' height='75%'>
       <set href="#text" attributeName="text-buffer" to="Finish" />
     </use>
   </svg>

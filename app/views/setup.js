@@ -33,7 +33,7 @@ export default (timerSettings) => {
     let setSetupValues = ({ duration, intervals, activity }) => {
         (duration > 0) ? durationValue.text = `${duration} m` : durationValue.text = 'Infinity';
         intervalValue.text = intervals.length;
-        activityValue.text = activity;
+        activityValue.text = activity.charAt(0).toUpperCase() + activity.slice(1);
     }
 
     centerPlayButton(document.getElementById('play-button-section'), document.getElementById('play-image'));
