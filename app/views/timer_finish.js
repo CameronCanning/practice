@@ -1,23 +1,31 @@
 import document from 'document';
 import exercise from 'exercise';
 import { next, buttons } from 'fitbit-views';
+import { me } from 'appbit';
+import { toString, msToMinSec } from '../helper';
+import { streak } from '../streak';
 
-export default (param) => {
-    let logButton = document.getElementById('log-button');
+export default (timerSettings) => {
+    let durationText = document.getElementById('duration'); 
+    let streakText = document.getElementById('streak');
+    let hrText = document.getElementById('hr');
+    let closeButton = document.getElementById('close-button');
 
-    console.log('timer_finish');
-    console.log(param.timerSettings.duration);
-    console.log(param.timerContext.completed);
-    //x minutes
-    //x day streak
-    //avg heart rate?
+    let [m, s] = msToMinSec(exercise.stats.activeTime);
+    let duration = toString([m,s]);
+    let avgHeartRate = exercise.stats.heartRate.average;
+    let streakLength = streak();
+    exercise.stop();
+    
+    durationText.text = duration;
+    streakText.text = `${streakLength} day streak`;
+    hrText.text = `${avgHeartRate} avg`;
 
-    logButton.onclick = () => {
-        exercise.start(param.timerSettings.activity);
-        next('setup', param.timerSettings);
+    closeButton.onclick = () => {
+        me.exit();
     }
-
+    
     buttons.back = () => {
-        next('setup', param.timerSettings);
+        next('setup', timerSettings);
     }
 }

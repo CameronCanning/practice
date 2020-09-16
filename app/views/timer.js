@@ -2,8 +2,8 @@ import document from 'document';
 import clock from 'clock';
 import exercise from 'exercise';
 import { vibration } from 'haptics';
-import { centerPlayButton } from '../helper';
-import { buttons, back, next } from 'fitbit-views';
+import { centerPlayButton, toString, msToMinSec } from '../helper';
+import { buttons, next } from 'fitbit-views';
 
 //TODO-fix: don't track time if passed
 export default (timerSettings) => {
@@ -21,6 +21,7 @@ export default (timerSettings) => {
     let intervals = timerSettings.intervals;
     let toCountup = null;
     let durationFinished = false;
+    let timeFinished = 0;
 
     let play = () => {
         exercise.resume();
@@ -35,19 +36,7 @@ export default (timerSettings) => {
         clock.granularity = 'off';
         pauseSection.style.display = 'inline';
     }
-    let msToMinSec = (ms) => {
-        let s = Math.floor(ms/1000);
-        let m = Math.floor(s/60);
-        s = s - (m*60);
-        return [m, s];
-    }
-
-    let toString = ([m, s]) => {
-        if (s < 10) s = `0${s}`;
-        console.log(`${m}:${s}`);
-        return `${m}:${s}`;
-    }
-
+   
     let timerFinished = () => {
         if (durationFinished){
             return false;
@@ -58,7 +47,6 @@ export default (timerSettings) => {
                 return true;
             }
             return false;
-            //return (duration <= exercise.stats.activeTime) ? true : false;
         }
         return false;
     }
@@ -80,6 +68,7 @@ export default (timerSettings) => {
         next('timer_finish', timerSettings);
     }
 
+    //TODO: prompt are you sure
     buttons.back = () => {
         clock.granularity = 'off';
         exercise.stop();
@@ -91,10 +80,14 @@ export default (timerSettings) => {
         if (timerFinished()){
             console.log('nudge-max');
             vibration.start('nudge-max');
+            playSection.style.display = 'none';
+            pauseSection.style.display = 'inline';
             //after 10 seconds start counting up
             toCountup  = setTimeout(() => {
                 duration = 0;
                 durationFinished = false;
+                playSection.style.display = 'inline';
+                pauseSection.style.dispaly = 'none';
             }, 10000);
         }
     }
