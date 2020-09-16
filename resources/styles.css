@@ -94,4 +94,25 @@ text {
   x: $;
 }
 
+#panel {
+  y: $;
+  height: 15%;
+}
 #spinner { x: 50%-25; y: 50%-25; width: 50; height: 50; fill: fb-white; }
+
+.panel {
+  height: 17%;
+  width: 100%;
+  y: $;
+}
+.panel text {
+  x: 32+5;
+  y: 50%+11;
+  font-size: 32;
+}
+.icon {
+  fill: white;
+  height: 32;
+  width: 32;
+  y: 50%-16;
+}

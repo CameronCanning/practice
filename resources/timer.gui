@@ -7,10 +7,10 @@
       <set href="#text" attributeName="text-buffer" to="Finish" />
     </use>
   </svg>
-  <section id='play-button-section' y='70%' height='25%'>
+  <svg id='play-button-section' y='70%' height='25%'>
     <circle cx='50%' cy='50%' r='50%' fill='grey'/>
     <circle cx='50%' cy='50%' r='50%-3' fill='black'/>
     <image id='play-image' load='sync' x ='50%' href="icons/btn_combo_pause_press_p.png" fill='white'/>
     <circle id='play-button' cx='50%' cy='50%' r='50%' fill='none' pointer-events='visible'/>
-  </section>
+  </svg>
 </svg>

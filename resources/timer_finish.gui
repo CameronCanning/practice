@@ -1,6 +1,20 @@
 <svg viewport-fill='black'>
-    <text id='streak' text-anchor='middle' x='50%' y='50%' font-size='48'>1 day streak!</text>
-    <use id="log-button" href="#square-button" fill="white" y='75%'>
-      <set href="#text" attributeName="text-buffer" to="Log" />
+  <svg height='20%' width='100%' >  
+    <text font-size='48' y='70%+3' x='50%' text-anchor='middle'>Great Job!</text>
+  </svg>
+  <svg class="panel">
+    <image class="icon" href="icons/stat_duration_32px_p.png"/> 
+    <text id='duration'>10:00</text>
+  </svg>
+  <svg class="panel">
+    <image class="icon" href="icons/stat_cals_open_32px.png"/>
+    <text id='streak'>1 day streak</text>
+  </svg>
+  <svg class="panel">
+    <image class="icon" href="icons/stat_hr_avg_32px_p.png"/>
+    <text id='hr'>50 avg bpm</text>
+  </svg>
+  <use id="close-button" href="#square-button" y="75%" height='25%' fill="white" >
+      <set href="#text" attributeName="text-buffer" to="Close" />
     </use>
 </svg>

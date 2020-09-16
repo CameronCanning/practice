@@ -15,7 +15,8 @@
     "wipeColor": "#ffffff",
     "requestedPermissions": [
       "access_exercise",
-      "access_heart_rate"],
+      "access_heart_rate"
+    ],
     "buildTargets": [
       "higgs",
       "meson",
@@ -30,6 +31,7 @@
     "debug": "fitbit"
   },
   "dependencies": {
+    "cbor": "^5.1.0",
     "fitbit": "0.0.7",
     "fitbit-views": "^1.0.3"
   }
